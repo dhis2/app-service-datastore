@@ -1,4 +1,10 @@
-This project was bootstrapped with [DHIS2 Application Platform](https://github.com/dhis2/app-platform).
+# DataStore App Service
+
+> **NOTE: THIS IS STILL AN UNPUBLISHED WORK-IN-PROGRESS!
+
+This DataStore app service support persistent user and global application settings as well as saved (and sharable) objects, such as visualization configurations.
+
+This library was bootstrapped with [DHIS2 Application Platform](https://github.com/dhis2/app-platform).
 
 ## Available Scripts
 
