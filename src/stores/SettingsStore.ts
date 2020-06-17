@@ -62,7 +62,7 @@ export class SettingsStore {
     
             this.settings = newSettings.settings
         } catch (e) {
-            if (e.details?.status === 404) {
+            if (e.details?.httpStatusCode === 404) {
                 await this.create()
             } else {
                 throw e;
