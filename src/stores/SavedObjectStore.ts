@@ -1,10 +1,13 @@
-import { v4 as uuid } from "uuid";
-import { SettingsStore, DataStoreResource } from "./SettingsStore";
+import { v4 as uuid } from 'uuid'
+import {
+    SettingsStore,
+    DataStoreResource /* eslint-disable-line no-unused-vars */,
+} from './SettingsStore'
 
 type SavedObjectStoreInput = {
-    engine: any,
-    resource: DataStoreResource,
-    namespace: string,
+    engine: any
+    resource: DataStoreResource
+    namespace: string
     item: string
 }
 export class SavedObjectStore extends SettingsStore {
@@ -18,13 +21,15 @@ export class SavedObjectStore extends SettingsStore {
 
     async add(object: object) {
         if (typeof object !== 'object') {
-            throw new Error(`Only objects are allowed in the SavedObjectStore, received ${object}`)
+            throw new Error(
+                `Only objects are allowed in the SavedObjectStore, received ${object}`
+            )
         }
         const id = uuid()
 
         const newObject = {
             ...object,
-            id
+            id,
         }
 
         await this.set(id, newObject)
@@ -34,7 +39,7 @@ export class SavedObjectStore extends SettingsStore {
     async update(id: string, object: object) {
         const objectToAdd = {
             ...this.get(id),
-            ...object
+            ...object,
         }
         await this.set(id, objectToAdd)
         return objectToAdd

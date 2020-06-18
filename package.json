@@ -1,37 +1,45 @@
 {
-  "name": "@dhis2/app-service-datastore",
-  "version": "2.1.1",
-  "description": "",
-  "main": "build/cjs/lib.js",
-  "module": "build/es/lib.js",
-  "types": "build/types/index.d.ts",
-  "license": "BSD-3-Clause",
-  "private": true,
-  "scripts": {
-    "build:types": "tsc --emitDeclarationOnly --outDir ./build/types",
-    "build:package": "d2-app-scripts build",
-    "build": "concurrently -n build,types \"yarn build:package\" \"yarn build:types\"",
-    "watch": "NODE_ENV=development concurrently -n build,types \"yarn build:package --watch\" \"yarn build:types --watch\"",
-    "type-check": "tsc --noEmit --allowJs --checkJs",
-    "type-check:watch": "yarn type-check --watch",
-    "test": "d2-app-scripts test",
-    "coverage": "yarn test --coverage",
-    "prepublishOnly": "yarn build"
-  },
-  "devDependencies": {
-    "@dhis2/cli-app-scripts": "^4.0.0",
-    "@types/jest": "^24.9.0",
-    "@types/node": "^13.1.8",
-    "@types/react": "^16.9.18",
-    "@types/uuid": "^8.0.0",
-    "concurrently": "^5.2.0"
-  },
-  "dependencies": {
-    "@dhis2/app-service-data": "^2.1.1",
-    "uuid": "^8.1.0"
-  },
-  "peerDependencies": {
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
-  }
+    "name": "@dhis2/app-service-datastore",
+    "version": "0.9.0",
+    "description": "",
+    "main": "build/cjs/lib.js",
+    "module": "build/es/lib.js",
+    "types": "build/types/index.d.ts",
+    "license": "BSD-3-Clause",
+    "publishConfig": {
+        "access": "public"
+    },
+    "scripts": {
+        "build:types": "tsc --emitDeclarationOnly --outDir ./build/types",
+        "build:package": "d2-app-scripts build",
+        "build": "concurrently -n build,types \"yarn build:package\" \"yarn build:types\"",
+        "watch": "NODE_ENV=development concurrently -n build,types \"yarn build:package --watch\" \"yarn build:types --watch\"",
+        "type-check": "tsc --noEmit --allowJs --checkJs",
+        "type-check:watch": "yarn type-check --watch",
+        "test": "echo 'No tests yet :-('",
+        "coverage": "yarn test --coverage",
+        "prepublishOnly": "yarn build",
+        "lint": "d2-style js check && d2-style text check",
+        "format": "d2-style js apply --all --no-stage && d2-style text apply --all --no-stage"
+    },
+    "devDependencies": {
+        "@dhis2/cli-app-scripts": "^4.0.8",
+        "@dhis2/cli-style": "^7.0.0",
+        "@types/jest": "^24.9.0",
+        "@types/node": "^13.1.8",
+        "@types/react": "^16.9.18",
+        "@types/uuid": "^8.0.0",
+        "@typescript-eslint/parser": "^3.3.0",
+        "concurrently": "^5.2.0",
+        "eslint-plugin-react-hooks": "^4.0.4",
+        "typescript": "^3.9.5"
+    },
+    "dependencies": {
+        "uuid": "^8.1.0"
+    },
+    "peerDependencies": {
+        "@dhis2/app-service-data": "^2.1.1",
+        "react": "^16.12.0",
+        "react-dom": "^16.12.0"
+    }
 }

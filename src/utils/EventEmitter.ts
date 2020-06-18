@@ -8,42 +8,42 @@ export class EventEmitter {
 
     on(event: string, listener: Function) {
         if (!this.events[event]) {
-            this.events[event] = [];
+            this.events[event] = []
         }
-    
-        this.events[event].push(listener);
+
+        this.events[event].push(listener)
     }
 
     off(event: string, listener: Function) {
-        var idx;
-    
+        var idx
+
         if (this.events[event]) {
-            idx = this.events[event].indexOf(listener);
-    
+            idx = this.events[event].indexOf(listener)
+
             if (idx > -1) {
-                this.events[event].splice(idx, 1);
+                this.events[event].splice(idx, 1)
             }
         }
     }
 
     emit(event: string, ...args: any[]) {
-        var i, listeners, length;
+        var i, listeners, length
 
         if (this.events[event]) {
-            listeners = this.events[event].slice();
-            length = listeners.length;
+            listeners = this.events[event].slice()
+            length = listeners.length
 
             for (i = 0; i < length; i++) {
-                listeners[i](...args);
+                listeners[i](...args)
             }
         }
     }
 
     once(event: string, listener: Function) {
         const callback = () => {
-            this.off(event, callback);
-            listener.apply(this, arguments);
+            this.off(event, callback)
+            listener.apply(this, arguments)
         }
-        this.on(event, callback);
-    };
-};
+        this.on(event, callback)
+    }
+}

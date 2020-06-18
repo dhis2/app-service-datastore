@@ -1,9 +1,9 @@
-import { SavedObjectStore } from "./SavedObjectStore";
-import { SettingsStore } from "./SettingsStore";
+import { SavedObjectStore } from './SavedObjectStore'
+import { SettingsStore } from './SettingsStore'
 
 type DataStoreInput = {
-    engine: any,
-    namespace: string,
+    engine: any
+    namespace: string
     defaultGlobalSettings?: object
     defaultUserSettings?: object
 }
@@ -14,33 +14,38 @@ export class DataStore {
     userSavedObjects: SavedObjectStore
     globalSavedObjects: SavedObjectStore
 
-    constructor({ engine, namespace, defaultGlobalSettings, defaultUserSettings }: DataStoreInput) {
+    constructor({
+        engine,
+        namespace,
+        defaultGlobalSettings,
+        defaultUserSettings,
+    }: DataStoreInput) {
         this.globalSettings = new SettingsStore({
             engine,
             resource: 'dataStore',
             namespace,
             item: 'settings',
-            defaults: defaultGlobalSettings 
+            defaults: defaultGlobalSettings,
         })
         this.userSettings = new SettingsStore({
             engine,
             resource: 'userDataStore',
             namespace,
             item: 'settings',
-            defaults: defaultUserSettings
+            defaults: defaultUserSettings,
         })
-        
+
         this.userSavedObjects = new SavedObjectStore({
             engine,
             resource: 'userDataStore',
             namespace,
             item: 'savedObjects',
         })
-        this.globalSavedObjects = new SavedObjectStore({ 
+        this.globalSavedObjects = new SavedObjectStore({
             engine,
             resource: 'dataStore',
             namespace,
-            item: 'savedObjects'
+            item: 'savedObjects',
         })
     }
 
@@ -56,7 +61,10 @@ export class DataStore {
     async shareSavedObject(id: string) {
         if (this.userSavedObjects.has(id)) {
             // TODO: Handle errors
-            await this.globalSavedObjects.update(id, this.userSavedObjects.get(id))
+            await this.globalSavedObjects.update(
+                id,
+                this.userSavedObjects.get(id)
+            )
             await this.userSavedObjects.remove(id)
         }
     }
@@ -64,7 +72,10 @@ export class DataStore {
     async unshareSavedObject(id: string) {
         if (this.globalSavedObjects.has(id)) {
             // TODO: Handle errors
-            await this.userSavedObjects.update(id, this.globalSavedObjects.get(id))
+            await this.userSavedObjects.update(
+                id,
+                this.globalSavedObjects.get(id)
+            )
             await this.globalSavedObjects.remove(id)
         }
     }

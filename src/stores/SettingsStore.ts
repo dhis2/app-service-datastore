@@ -1,19 +1,16 @@
-import { EventEmitter } from "../utils/EventEmitter"
+import { EventEmitter } from '../utils/EventEmitter'
 
 export type DataStoreResource = 'dataStore' | 'userDataStore'
 
-const joinPath = (...parts: Array<string>) => 
-    parts.map(part => 
-        part
-            .replace(/^\/+/, '')
-            .replace(/\/+$/, '')
-    ).join('/')
+const joinPath = (...parts: Array<string>) =>
+    parts.map(part => part.replace(/^\/+/, '').replace(/\/+$/, '')).join('/')
 
+// TODO: Proper engine typings
 export type BaseSettingsStoreInput = {
-    engine: any, // TODO: Proper typings
-    resource: DataStoreResource,
-    namespace: string,
-    item: string,
+    engine: any
+    resource: DataStoreResource
+    namespace: string
+    item: string
     defaults: any
 }
 
@@ -21,7 +18,7 @@ export class SettingsStore {
     engine: any
     resource: DataStoreResource
     dataStoreId: string
-    settings: Record<string,any>
+    settings: Record<string, any>
 
     eventEmitter = new EventEmitter()
 
@@ -30,7 +27,7 @@ export class SettingsStore {
         resource,
         namespace,
         item,
-        defaults = {}
+        defaults = {},
     }: BaseSettingsStoreInput) {
         this.engine = engine
         this.resource = resource
@@ -46,26 +43,26 @@ export class SettingsStore {
         await this.engine.mutate({
             resource: `${this.resource}/${this.dataStoreId}`,
             type: 'create',
-            data: this.settings
+            data: this.settings,
         })
     }
 
     async refresh() {
-        const prevSettings = this.settings;
+        const prevSettings = this.settings
         try {
             const newSettings = await this.engine.query({
                 settings: {
                     resource: this.resource,
                     id: this.dataStoreId,
-                }
+                },
             })
-    
+
             this.settings = newSettings.settings
         } catch (e) {
             if (e.details?.httpStatusCode === 404) {
                 await this.create()
             } else {
-                throw e;
+                throw e
             }
         }
 
@@ -76,7 +73,7 @@ export class SettingsStore {
         })
         this.eventEmitter.emit('change', this.settings)
     }
-    
+
     get(key: string) {
         return this.settings[key]
     }
@@ -84,7 +81,7 @@ export class SettingsStore {
         const prevSettings = this.settings
         const newSettings = {
             ...this.settings,
-            [key]: value
+            [key]: value,
         }
         if (typeof value === 'undefined') {
             delete newSettings[key]
@@ -99,7 +96,7 @@ export class SettingsStore {
                 resource: this.resource,
                 type: 'update',
                 id: this.dataStoreId,
-                data: this.settings
+                data: this.settings,
             })
         } catch (e) {
             this.settings = prevSettings
