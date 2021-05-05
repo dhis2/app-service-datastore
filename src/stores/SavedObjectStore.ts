@@ -9,7 +9,7 @@ type SavedObjectStoreInput = {
 }
 export class SavedObjectStore extends SettingsStore {
     constructor({ engine, resource, namespace, item }: SavedObjectStoreInput) {
-        super({ engine, resource, namespace, item, defaults: {} })
+        super({ engine, resource, namespace, item, defaults: {}, encrypt: false })
     }
 
     has(id: string) {
