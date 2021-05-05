@@ -14,7 +14,8 @@ export type BaseSettingsStoreInput = {
     resource: DataStoreResource,
     namespace: string,
     item: string,
-    defaults: any
+    defaults: any,
+    encrypt: boolean
 }
 
 export class SettingsStore {
@@ -22,7 +23,7 @@ export class SettingsStore {
     resource: DataStoreResource
     dataStoreId: string
     settings: Record<string,any>
-
+    encrypt: boolean
     eventEmitter = new EventEmitter()
 
     constructor({
@@ -30,12 +31,15 @@ export class SettingsStore {
         resource,
         namespace,
         item,
-        defaults = {}
+        defaults = {},
+        encrypt = false,
     }: BaseSettingsStoreInput) {
         this.engine = engine
         this.resource = resource
         this.dataStoreId = joinPath(namespace, item)
         this.settings = defaults
+
+        this.encrypt = encrypt
     }
 
     async initialize() {
@@ -46,6 +50,9 @@ export class SettingsStore {
         await this.engine.mutate({
             resource: `${this.resource}/${this.dataStoreId}`,
             type: 'create',
+            params: {
+                encrypt: this.encrypt
+            },
             data: this.settings
         })
     }
@@ -99,6 +106,9 @@ export class SettingsStore {
                 resource: this.resource,
                 type: 'update',
                 id: this.dataStoreId,
+                params: {
+                    encrypt: this.encrypt
+                },
                 data: this.settings
             })
         } catch (e) {

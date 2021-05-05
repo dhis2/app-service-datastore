@@ -8,13 +8,15 @@ export const DataStoreProvider = ({
     defaultGlobalSettings,
     defaultUserSettings,
     children,
-    loadingComponent = null
+    loadingComponent = null,
+    encryptSettings = false,
 }: {
     namespace: string,
     children: React.ReactNode
     loadingComponent: React.ReactNode
     defaultGlobalSettings?: Record<string, any>
     defaultUserSettings?: Record<string, any>
+    encryptSettings?: boolean
 }) => {
     const [loading, setLoading] = useState(true)
     const engine = useDataEngine()
@@ -22,7 +24,8 @@ export const DataStoreProvider = ({
         engine,
         namespace,
         defaultGlobalSettings,
-        defaultUserSettings
+        defaultUserSettings,
+        encryptSettings
     }), []) /* eslint-disable-line react-hooks/exhaustive-deps */
     
     useEffect(() => {

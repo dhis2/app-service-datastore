@@ -6,6 +6,7 @@ type DataStoreInput = {
     namespace: string,
     defaultGlobalSettings?: object
     defaultUserSettings?: object
+    encryptSettings: boolean
 }
 
 export class DataStore {
@@ -14,20 +15,22 @@ export class DataStore {
     userSavedObjects: SavedObjectStore
     globalSavedObjects: SavedObjectStore
 
-    constructor({ engine, namespace, defaultGlobalSettings, defaultUserSettings }: DataStoreInput) {
+    constructor({ engine, namespace, defaultGlobalSettings, defaultUserSettings, encryptSettings = false }: DataStoreInput) {
         this.globalSettings = new SettingsStore({
             engine,
             resource: 'dataStore',
             namespace,
             item: 'settings',
-            defaults: defaultGlobalSettings 
+            defaults: defaultGlobalSettings,
+            encrypt: encryptSettings
         })
         this.userSettings = new SettingsStore({
             engine,
             resource: 'userDataStore',
             namespace,
             item: 'settings',
-            defaults: defaultUserSettings
+            defaults: defaultUserSettings,
+            encrypt: encryptSettings
         })
         
         this.userSavedObjects = new SavedObjectStore({
