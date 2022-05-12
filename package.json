@@ -1,12 +1,14 @@
 {
   "name": "@dhis2/app-service-datastore",
-  "version": "2.1.1",
+  "version": "1.0.0-beta.1",
   "description": "",
   "main": "build/cjs/lib.js",
   "module": "build/es/lib.js",
   "types": "build/types/index.d.ts",
   "license": "BSD-3-Clause",
-  "private": true,
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build:types": "tsc --emitDeclarationOnly --outDir ./build/types",
     "build:package": "d2-app-scripts build",
