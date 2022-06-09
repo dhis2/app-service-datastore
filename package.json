@@ -1,6 +1,6 @@
 {
   "name": "@dhis2/app-service-datastore",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.2",
   "description": "",
   "main": "build/cjs/lib.js",
   "module": "build/es/lib.js",
