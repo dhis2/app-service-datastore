@@ -9,6 +9,9 @@
   "publishConfig": {
     "access": "public"
   },
+  "files": [
+    "/build"
+  ],
   "scripts": {
     "build:types": "tsc --emitDeclarationOnly --outDir ./build/types",
     "build:package": "d2-app-scripts build",
